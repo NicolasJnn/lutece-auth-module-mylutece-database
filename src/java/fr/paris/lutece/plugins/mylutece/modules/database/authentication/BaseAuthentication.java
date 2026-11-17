@@ -647,7 +647,7 @@ public class BaseAuthentication extends PortalAuthentication
 
             if ( ( strUserMail != null ) && StringUtils.isNotBlank( strUserMail ) )
             {
-                MailService.sendMailHtml( strUserMail, strSender, strSender, strSubject, template.getHtml( ) );
+                MailService.sendMailHtml( strUserMail, strSender, MailService.getNoReplyEmail( ), strSubject, template.getHtml( ) );
             }
         }
     }

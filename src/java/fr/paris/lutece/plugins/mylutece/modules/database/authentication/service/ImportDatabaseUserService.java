@@ -81,7 +81,6 @@ public class ImportDatabaseUserService extends CSVReaderService
     private static final String MESSAGE_ERROR_MIN_NUMBER_COLUMNS = "module.mylutece.database.import_users_from_file.messageErrorMinColumnNumber";
     private static final String MESSAGE_ACCOUNT_IMPORTED_MAIL_SUBJECT = "module.mylutece.database.import_users_from_file.email.mailSubject";
     private static final String MESSAGE_ERROR_IMPORTING_ATTRIBUTES = "module.mylutece.database.import_users_from_file.errorImportingAttributes";
-    private static final String PROPERTY_NO_REPLY_EMAIL = "mail.noreply.email";
     private static final String PROPERTY_IMPORT_EXPORT_USER_SEPARATOR = "lutece.importExportUser.defaultSeparator";
     private static final String PROPERTY_SITE_NAME = "lutece.name";
     private static final String TEMPLATE_MAIL_USER_IMPORTED = "admin/plugins/mylutece/modules/database/mail_user_imported.html";
@@ -404,7 +403,6 @@ public class ImportDatabaseUserService extends CSVReaderService
      */
     private void notifyUserAccountCreated( DatabaseUser user, String strPassword, Locale locale, String strProdUrl )
     {
-        String strSenderEmail = AppPropertiesService.getProperty( PROPERTY_NO_REPLY_EMAIL );
         String strSiteName = AppPropertiesService.getProperty( PROPERTY_SITE_NAME );
 
         String strEmailSubject = I18nService.getLocalizedString( MESSAGE_ACCOUNT_IMPORTED_MAIL_SUBJECT, new String [ ] {
@@ -419,7 +417,7 @@ public class ImportDatabaseUserService extends CSVReaderService
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MAIL_USER_IMPORTED, locale, model );
 
-        MailService.sendMailHtml( user.getEmail( ), strSenderEmail, strSenderEmail, strEmailSubject, template.getHtml( ) );
+        MailService.sendMailHtml( user.getEmail( ), strSiteName, MailService.getNoReplyEmail( ), strEmailSubject, template.getHtml( ) );
     }
 
     /**

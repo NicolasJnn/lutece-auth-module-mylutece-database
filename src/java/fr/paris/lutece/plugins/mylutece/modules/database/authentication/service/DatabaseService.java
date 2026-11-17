@@ -570,7 +570,7 @@ public class DatabaseService
 
                 HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strTemplate, locale, model );
 
-                MailService.sendMailHtml( user.getEmail( ), strSenderEmail, strSenderEmail, strEmailSubject, template.getHtml( ) );
+                MailService.sendMailHtml( user.getEmail( ), strSenderEmail, MailService.getNoReplyEmail( ), strEmailSubject, template.getHtml( ) );
             }
         }
     }
@@ -639,7 +639,7 @@ public class DatabaseService
             accountLifeTimeService.addParametersToModel( model, nIdUser );
 
             HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strBody, Locale.getDefault( ), model );
-            MailService.sendMailHtml( strUserMail, strSender, strSender, strSubject, template.getHtml( ) );
+            MailService.sendMailHtml( strUserMail, strSender, MailService.getNoReplyEmail( ), strSubject, template.getHtml( ) );
         }
     }
 
