@@ -69,6 +69,7 @@ public class DatabaseDAO implements IDatabaseDAO
     private static final String SQL_QUERY_FIND_GROUPS_FROM_LOGIN = "SELECT b.group_key FROM mylutece_database_user a, mylutece_database_user_group b"
             + " WHERE a.mylutece_database_user_id = b.mylutece_database_user_id AND a.login like ? ";
     private static final String SQL_QUERY_DELETE_GROUPS_FOR_USER = "DELETE FROM mylutece_database_user_group WHERE mylutece_database_user_id = ?";
+    private static final String SQL_QUERY_DELETE_USERS_FOR_GROUP = "DELETE FROM mylutece_database_user_group WHERE group_key = ?";
     private static final String SQL_QUERY_INSERT_GROUP_FOR_USER = "INSERT INTO mylutece_database_user_group ( mylutece_database_user_id, group_key ) VALUES ( ?, ? ) ";
     private static final String SQL_QUERY_SELECTALL = " SELECT mylutece_database_user_id, login, name_family, name_given, email FROM mylutece_database_user ";
     private static final String SQL_QUERY_FIND_USERS_FROM_GROUP_KEY = "SELECT a.mylutece_database_user_id, a.login, a.name_family, a.name_given, a.email FROM mylutece_database_user a "
@@ -348,6 +349,25 @@ public class DatabaseDAO implements IDatabaseDAO
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_GROUPS_FOR_USER, plugin ) )
         {
             daoUtil.setInt( 1, nIdUser );
+
+            daoUtil.executeUpdate( );
+        }
+    }
+
+    /**
+     * Delete the assignments of all users to a group
+     * 
+     * @param strGroupKey
+     *            The key of the group
+     * @param plugin
+     *            The Plugin using this data access service
+     */
+    @Override
+    public void deleteUsersForGroup( String strGroupKey, Plugin plugin )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_USERS_FOR_GROUP, plugin ) )
+        {
+            daoUtil.setString( 1, strGroupKey );
 
             daoUtil.executeUpdate( );
         }

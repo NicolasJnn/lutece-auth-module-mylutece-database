@@ -162,6 +162,16 @@ public interface IDatabaseDAO
     void deleteGroupsForUser( int nIdUser, Plugin plugin );
 
     /**
+     * Delete the assignments of all users to a group
+     * 
+     * @param strGroupKey
+     *            The key of the group
+     * @param plugin
+     *            The Plugin using this data access service
+     */
+    void deleteUsersForGroup( String strGroupKey, Plugin plugin );
+
+    /**
      * Assign a group to user
      * 
      * @param nIdUser

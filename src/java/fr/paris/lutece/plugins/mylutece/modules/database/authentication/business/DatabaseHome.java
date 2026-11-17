@@ -186,6 +186,19 @@ public final class DatabaseHome
     }
 
     /**
+     * Delete the assignments of all users to a group
+     * 
+     * @param strGroupKey
+     *            The key of the group
+     * @param plugin
+     *            The Plugin using this data access service
+     */
+    public static void removeUsersForGroup( String strGroupKey, Plugin plugin )
+    {
+        _dao.deleteUsersForGroup( strGroupKey, plugin );
+    }
+
+    /**
      * Assign a group to user
      * 
      * @param nIdUser

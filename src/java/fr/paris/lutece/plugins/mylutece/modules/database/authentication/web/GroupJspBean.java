@@ -426,6 +426,8 @@ public class GroupJspBean extends PluginAdminPageJspBean
             return AdminMessageService.getMessageUrlReturningTo( request, MESSAGE_ERROR_REMOVE, AdminMessage.TYPE_ERROR, getHomeUrl( request ) );
         }
 
+        DatabaseHome.removeUsersForGroup( group.getGroupKey( ), getPlugin( ) );
+        GroupRoleHome.removeRoles( group.getGroupKey( ), getPlugin( ) );
         GroupHome.remove( group.getGroupKey( ), getPlugin( ) );
 
         return getHomeUrl( request );

@@ -55,8 +55,8 @@ public final class GroupDAO implements IGroupDAO
     private static final String SQL_QUERY_SELECTALL = " SELECT group_key, group_description FROM mylutece_database_group ORDER BY group_key";
     private static final String SQL_QUERY_SELECT_BY_KEY = " SELECT group_key, group_description FROM mylutece_database_group WHERE group_key = ? ORDER BY group_key";
     private static final String SQL_QUERY_INSERT = " INSERT INTO mylutece_database_group ( group_key, group_description ) VALUES ( ?, ? )";
-    private static final String SQL_QUERY_DELETE = " DELETE FROM mylutece_database_group WHERE group_key like ? ";
-    private static final String SQL_QUERY_UPDATE = " UPDATE mylutece_database_group SET group_key = ?, group_description = ? WHERE group_key like ?";
+    private static final String SQL_QUERY_DELETE = " DELETE FROM mylutece_database_group WHERE group_key = ? ";
+    private static final String SQL_QUERY_UPDATE = " UPDATE mylutece_database_group SET group_key = ?, group_description = ? WHERE group_key = ?";
     private static final String SQL_QUERY_SELECT_GROUP_FROM_SEARCH = " SELECT group_key, group_description FROM mylutece_database_group "
             + " WHERE group_key LIKE ? AND group_description LIKE ? ORDER BY group_key ";
 

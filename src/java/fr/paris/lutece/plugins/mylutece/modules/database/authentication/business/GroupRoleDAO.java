@@ -48,9 +48,9 @@ import java.util.List;
 @Named( "mylutece-database.databaseGroupRoleDAO" )
 public class GroupRoleDAO implements IGroupRoleDAO
 {
-    public static final String SQL_QUERY_FIND_ROLES_FROM_GROUP_ID = "SELECT role_key FROM mylutece_database_group_role WHERE group_key like ? ";
+    public static final String SQL_QUERY_FIND_ROLES_FROM_GROUP_ID = "SELECT role_key FROM mylutece_database_group_role WHERE group_key = ? ";
     public static final String SQL_QUERY_FIND_GROUPS_FROM_ROLE_ID = "SELECT group_key FROM mylutece_database_group_role WHERE role_key = ? ";
-    private static final String SQL_QUERY_DELETE_ROLES_FOR_GROUP = "DELETE FROM mylutece_database_group_role WHERE group_key like ?";
+    private static final String SQL_QUERY_DELETE_ROLES_FOR_GROUP = "DELETE FROM mylutece_database_group_role WHERE group_key = ?";
     private static final String SQL_QUERY_INSERT_ROLE_FOR_GROUP = "INSERT INTO mylutece_database_group_role ( group_key, role_key ) VALUES ( ?, ? ) ";
 
     /**
