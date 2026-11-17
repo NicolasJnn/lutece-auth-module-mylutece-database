@@ -74,6 +74,7 @@ import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.rbac.RBACService;
+import fr.paris.lutece.portal.service.security.SecurityTokenService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.template.DatabaseTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -139,6 +140,7 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
     private static final String QUESTION_MARK = "?";
     private static final String AMPERSAND = "&";
     private static final String EQUAL = "=";
+    private static final String TOKEN_CHANGE_USER_STATUS = "mylutece-database.changeUserStatus";
 
     // JSP
     private static final String JSP_DO_REMOVE_USER = "jsp/admin/plugins/mylutece/modules/database/DoRemoveUser.jsp";
@@ -393,6 +395,7 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
         model.put( MARK_PLUGIN_NAME, getPlugin( ).getName( ) );
         model.put( MARK_EXTERNAL_APPLICATION_EXIST, applicationsExist );
         model.put( MARK_PERMISSION_ADVANCED_PARAMETER, bPermissionAdvancedParameter );
+        model.put( SecurityTokenService.MARK_TOKEN, getSecurityTokenService( ).getToken( request, TOKEN_CHANGE_USER_STATUS ) );
 
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_MANAGE_USERS, getLocale( ), model );
 
@@ -670,6 +673,7 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
         UrlItem url = new UrlItem( JSP_DO_REMOVE_USER );
         url.addParameter( PARAMETER_PLUGIN_NAME, getPlugin( ).getName( ) );
         url.addParameter( PARAMETER_MYLUTECE_DATABASE_USER_ID, request.getParameter( PARAMETER_MYLUTECE_DATABASE_USER_ID ) );
+        url.addParameter( SecurityTokenService.PARAMETER_TOKEN, getSecurityTokenService( ).getToken( request, JSP_DO_REMOVE_USER ) );
 
         return AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_USER, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
     }
@@ -680,9 +684,16 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
      * @param request
      *            The Http request
      * @return The Jsp management URL of the process result
+     * @throws AccessDeniedException
+     *             If the security token is invalid
      */
-    public String doRemoveUser( HttpServletRequest request )
+    public String doRemoveUser( HttpServletRequest request ) throws AccessDeniedException
     {
+        if ( !getSecurityTokenService( ).validate( request, JSP_DO_REMOVE_USER ) )
+        {
+            throw new AccessDeniedException( ERROR_INVALID_TOKEN );
+        }
+
         DatabaseUser user = getDatabaseUserFromRequest( request );
 
         if ( user == null )
@@ -1047,8 +1058,10 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
      * @param request
      *            the Http
      * @return the jsp home
+     * @throws AccessDeniedException
+     *             If the security token is invalid
      */
-    public String doActivateUser( HttpServletRequest request )
+    public String doActivateUser( HttpServletRequest request ) throws AccessDeniedException
     {
         return doChangeUserStatus( request, true );
     }
@@ -1059,8 +1072,10 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
      * @param request
      *            the HTTP request
      * @return the JSP home
+     * @throws AccessDeniedException
+     *             If the security token is invalid
      */
-    public String doDeactivateUser( HttpServletRequest request )
+    public String doDeactivateUser( HttpServletRequest request ) throws AccessDeniedException
     {
         return doChangeUserStatus( request, false );
     }
@@ -1108,9 +1123,16 @@ public class DatabaseJspBean extends PluginAdminPageJspBean
      * @param bIsActive
      *            true if the user must be changed to active, false otherwise
      * @return the JSP home
+     * @throws AccessDeniedException
+     *             If the security token is invalid
      */
-    private String doChangeUserStatus( HttpServletRequest request, boolean bIsActive )
+    private String doChangeUserStatus( HttpServletRequest request, boolean bIsActive ) throws AccessDeniedException
     {
+        if ( !getSecurityTokenService( ).validate( request, TOKEN_CHANGE_USER_STATUS ) )
+        {
+            throw new AccessDeniedException( ERROR_INVALID_TOKEN );
+        }
+
         DatabaseUser databaseUser = getDatabaseUserFromRequest( request );
 
         if ( databaseUser != null )

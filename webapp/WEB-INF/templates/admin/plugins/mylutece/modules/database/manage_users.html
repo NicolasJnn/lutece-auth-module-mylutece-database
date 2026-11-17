@@ -48,9 +48,9 @@
 								<@link class='dropdown-item portlet-type-ref disabled' href='#' params={'aria-disabled': 'true'} label='#i18n{mylutece.anonymize_user.statusLabelAnonymize}' />
 							<#else>
 								<#if user.isActive()>
-									<@link class='dropdown-item portlet-type-ref'  href='jsp/admin/plugins/mylutece/modules/database/DoDeactivateUser.jsp?plugin_name=${plugin_name}&mylutece_database_user_id=${user.userId}' label='#i18n{module.mylutece.database.manage_users.linkDeactivateUser}' />
+									<@link class='dropdown-item portlet-type-ref'  href='jsp/admin/plugins/mylutece/modules/database/DoDeactivateUser.jsp?plugin_name=${plugin_name}&token=${token}&mylutece_database_user_id=${user.userId}' label='#i18n{module.mylutece.database.manage_users.linkDeactivateUser}' />
 								<#else>
-									<@link class='dropdown-item portlet-type-ref' href='jsp/admin/plugins/mylutece/modules/database/DoActivateUser.jsp?plugin_name=${plugin_name}&mylutece_database_user_id=${user.userId}' label='#i18n{module.mylutece.database.manage_users.linkActivateUser}' />
+									<@link class='dropdown-item portlet-type-ref' href='jsp/admin/plugins/mylutece/modules/database/DoActivateUser.jsp?plugin_name=${plugin_name}&token=${token}&mylutece_database_user_id=${user.userId}' label='#i18n{module.mylutece.database.manage_users.linkActivateUser}' />
 								</#if>
 							</#if>
 							<@offcanvas id='offcanvasGroups-${user.userId}' targetUrl='jsp/admin/plugins/mylutece/modules/database/ManageGroupsUser.jsp?plugin_name=${plugin_name}&mylutece_database_user_id=${user.userId}' useIframe=true title='#i18n{module.mylutece.database.manage_users.linkManageGroups}' btnTitle='#i18n{module.mylutece.database.manage_users.linkManageGroups}' btnIcon='' btnColor='link' btnClass='text-body justify-content-start dropdown-item portlet-type-ref' position='end' size='half' />
